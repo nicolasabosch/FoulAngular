@@ -1,0 +1,90 @@
+﻿<form #crudView="ngForm" class="form-crud">
+    <crud-toolbar [form]="this"></crud-toolbar>
+
+    <div class="form-body">
+        <div class="row">
+            
+            <div class="col-sm-2 form-group">
+                <label for="txtMatchDate" tlt>
+                    Fecha
+                </label>
+                <p class="input-group">
+                    <input type="text" ngbDatepicker #txtMatchDate="ngbDatepicker" style="max-width:120px"
+                        [(ngModel)]="record.MatchDate" [crud-required]="action" name="txtMatchDate"
+                        tlt-placeholder="Fecha" class="form-control" onfocus="blur();">
+
+                    <span (click)="txtMatchDate.toggle()" class="btn btn-outline-secondary" style="cursor: pointer;"
+                        crud-show-c-u="{{action}}" tabindex="-1">
+                        <i class="far fa-calendar-alt"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div class="col-sm-2 form-group">
+                <label for="txtZoneID" tlt>
+                    Zona
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.ZoneID" class="form-control" autocomplete="off"
+                        [crud-required]="action" tlt-placeholder="Zona" name="txtZoneID">
+                        <option [ngValue]=undefined selected tlt> - Seleccione -</option>
+                        <option [value]="T.ZoneID" *ngFor="let T of ZoneList | orderBy:'ZoneName'">
+                            {{ T.ZoneName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="Local" tlt>
+                    Equipo Local
+                </label>
+                <p class="input-group">
+                    <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="record.HomeTeam"
+                        name="HomeTeamID" [crud-required]="action" [ngbTypeahead]="tableSearch('Team')"
+                        [focusFirst]='true' [editable]='false' autocomplete='off' crud-typeahead
+                        [displayFieldName]="'TeamName'" tlt-placeholder="Equipo Local"
+                        (ngModelChange)="record.HomeTeamID = record.HomeTeam.TeamID" />
+                    
+
+                    
+                </p>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label for="Visitante" tlt>
+                    Equipo Visitante
+                </label>
+                <p class="input-group">
+                    <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="record.AwayTeam"
+                        name="AwayTeamID" [crud-required]="action" [ngbTypeahead]="tableSearch('Team')"
+                        [focusFirst]='true' [editable]='false' autocomplete='off' crud-typeahead
+                        [displayFieldName]="'TeamName'" tlt-placeholder="Equipo Visitante"
+                        (ngModelChange)="record.AwayTeamID = record.AwayTeam.TeamID" />
+                    
+
+                    
+                </p>
+            </div>
+            <div class="col-sm-2 form-group">
+
+                <label for="txtMatchStatusID" tlt>
+                    Estado de Partido
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.MatchStatusID" class="form-control" autocomplete="off"
+                        [crud-required]="action" tlt-placeholder="Zona" name="txtMatchStatusID">
+                        <option [ngValue]=undefined selected tlt> - Seleccione -</option>
+                        <option [ngValue]="T.MatchStatusID"
+                            *ngFor="let T of MatchStatusList | orderBy:'MatchStatusName'">
+                            {{ T.MatchStatusName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
+
+      
+        </div>
+    </div>
+<button (click)="startMatch()">Comenzar</button>
+</form>

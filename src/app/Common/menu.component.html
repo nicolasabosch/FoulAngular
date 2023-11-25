@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-crud">
+  <div class="navbar-brand">
+  <div style="display: inline-block;" class="d-block d-sm-none">
+      
+      <h1 class="siteTitle">{{siteTitle}}</h1>
+    </div>
+
+    <div style="display: inline-block;width:300px;" class="d-none d-sm-block">
+      <h1 class="siteTitle">{{siteTitle}}</h1>
+    </div>
+
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+    <ul class="navbar-nav mr-auto" *ngIf="!IsProduction || (crudService.user && crudService.user.UserTypeID ===200)"></ul>
+    <ul class="navbar-nav mr-auto" *ngIf=" !IsProduction || (crudService.user && crudService.user.UserTypeID !==200)">
+      <li class="nav-item dropdown " style="margin-right: 40px !important; padding-top: 4px; "
+        *ngFor="let menuBar of crudService.UserMenuList | filter:'MenuBarID': '!HOME' | unique:'MenuBarName' | orderBy:'MenuBarDisplayOrder'">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{menuBar.MenuBarName}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item"
+            *ngFor="let menuItem of crudService.UserMenuList | filter:{'MenuBarID': menuBar.MenuBarID} | filter:{GroupNumber:1}   | filter:{'IsPage':true}  | orderBy:'MenuItemDisplayOrder'"
+            routerLink="/{{menuItem.RouteName}}" (click)="hideMenu()"
+            routerLinkActive="active">{{menuItem.MenuItemName}}</a>
+          <div class="dropdown-divider"
+            *ngIf="(crudService.UserMenuList | filter:{'MenuBarID': menuBar.MenuBarID} | filter:{GroupNumber:2} | filter:{IsPage:true}).length > 0">
+          </div>
+          <a class="dropdown-item"
+            *ngFor="let menuItem of crudService.UserMenuList | filter:{'MenuBarID': menuBar.MenuBarID} | filter:{GroupNumber:2}   | filter:{'IsPage':true}  | orderBy:'MenuItemDisplayOrder'"
+            routerLink="/{{menuItem.RouteName}}" (click)="hideMenu()"
+            routerLinkActive="active">{{menuItem.MenuItemName}}</a>
+          <div class="dropdown-divider"
+            *ngIf="(crudService.UserMenuList | filter:{'MenuBarID': menuBar.MenuBarID} | filter:{GroupNumber:3} | filter:{IsPage:true}).length > 0">
+          </div>
+          <a class="dropdown-item"
+            *ngFor="let menuItem of crudService.UserMenuList | filter:{'MenuBarID': menuBar.MenuBarID} | filter:{GroupNumber:3}   | filter:{'IsPage':true}  | orderBy:'MenuItemDisplayOrder'"
+            routerLink="/{{menuItem.RouteName}}" (click)="hideMenu()"
+            routerLinkActive="active">{{menuItem.MenuItemName}}</a>
+        </div>
+
+      </li>
+
+    </ul>
+    <ul class="navbar-nav mr-auto" style="margin-right: 50px !important">
+      <li class="nav-item" *ngIf="crudService.translatable" style="margin-right: 50px !important; ">
+
+        <select [(ngModel)]="LanguageID" class="form-control languageSelect" autocomplete="off"
+        tlt-placeholder="Idioma" (ngModelChange)="changeLanguage(LanguageID)"
+         name="txLanguageID">
+        <option [ngValue]="T.LanguageID" *ngFor="let T of languageList | orderBy:'LanguageName'">{{
+           T.LanguageName }}</option>
+       </select>
+
+      </li>
+      <li class="nav-item" style="margin-right: 40px !important; padding-top: 4px;">
+
+        <a class="nav-link" href="#" (click)="hideMenu()" routerLink="/ChangePassword" routerLinkActive="active"
+        >{{crudService.translate("Cambiar Contraseña")}}</a>
+      </li>
+      <li class="nav-item" style=" padding-top: 4px;">
+
+        <a class="nav-link" href="#" (click)="logout()">
+          <span >{{crudService.translate("Cerrar Sesión")}}</span>   </a>
+      </li>
+    </ul>
+
+  </div>
+
+
+</nav>

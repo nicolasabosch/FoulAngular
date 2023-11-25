@@ -1,0 +1,79 @@
+<style>
+    tbody {
+        height: calc(100vh - 260px) !important;
+    }
+</style>
+
+
+<div style="padding-left: 10px;padding-right: 10px">
+    <div style="padding: 10px;">
+        <button class="btn btn-primary btn-sm" (click)="report.removeFilters()">
+            <i class="fas fa-filter"></i>
+            Remove filters</button>
+    </div>
+    {{report.filteredData?.length}} / {{report.data?.length}}
+
+
+    <table class="table table-condensed table-bordered table-sm table-report">
+        <thead class="thead-dark" data-container="body">
+            <tr>
+                <th style="width: 200px;">
+                    <reportcolumn [filterName]="'País'" [fieldName]="'CountryName'"></reportcolumn>
+                </th>
+
+                <th style="width: 200px;">
+                    <reportcolumn [filterName]="'Empresa'" [fieldName]="'CompanyName'" [sort]="'asc'"></reportcolumn>
+                </th>
+
+                <th style="width: 200px;">
+                    <reportcolumn [filterName]="'Categoría'" [fieldName]="'ProductCategoryName'" [sort]="'asc'"></reportcolumn>
+                </th>
+                <th style="width: 200px;">
+                    <reportcolumn [filterName]="'Producto'" [fieldName]="'ProductName'" [sort]="'asc'"></reportcolumn>
+                </th>
+                <th style="width: 200px;">
+                    <reportcolumn [filterName]="'Monto'" [fieldName]="'InvoicingAmount'" [dataType]="'Decimal'">
+                    </reportcolumn>
+                </th>
+                <th style="width: 200px;">
+                    <reportcolumn [filterName]="'Nro'" [fieldName]="'InvoicingOrderNumber'" [dataType]="'String'">
+                    </reportcolumn>
+                </th>
+            </tr>
+        </thead>
+        <tbody (scroll)="report.setRowsLimit($event)">
+            <tr
+                *ngFor="let r of report.filteredData | orderBy:report.dataOrder  | slice:0:report.rowsLimit ; let i = index ">
+                <td>
+                    {{r.CountryName}}
+                </td>
+                <td>
+                    {{r.CompanyName}}
+                </td>
+<td>
+    {{r.ProductCategoryName}}
+</td>
+<td>
+    {{r.ProductName}}
+</td>
+
+
+                <td style="text-align: right;">
+                    {{r.InvoicingAmount | number:'1.2-2'}}
+                </td>
+                <td style="text-align: right;">
+                    {{r.InvoicingOrderNumber }}
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"></td>
+
+                <td style="text-align: right;">{{ report.filteredData | sum:'InvoicingAmount' | number:'1.2-2'}}</td>
+                <td style="text-align: right;">{{ report.filteredData | pxqsum:'InvoicingAmount':'InvoicingOrderNumber'
+                    | number:'1.2-2'}}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

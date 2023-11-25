@@ -1,0 +1,72 @@
+﻿<form #crudView="ngForm" class="form-crud">
+	<crud-toolbar [form]="this"></crud-toolbar>
+
+	<div class="form-body">
+		<div class="row">
+			<div class="col-sm-3 form-group">
+				<label for="txtCustomerID" tlt>
+					Código
+				</label>
+				<input type="text" [(ngModel)]="record.CustomerID" class="form-control" autocomplete="off"
+					[crud-key]="action" tlt-placeholder="Código" name="txtCustomerID" />
+			</div>
+			<div class="col-sm-9 form-group">
+				<label for="txtCustomerName" tlt>
+					Nombre
+				</label>
+				<input type="text" [(ngModel)]="record.CustomerName" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Nombre" name="txtCustomerName" />
+			</div>
+			<div class="col-sm-10 form-group">
+				<label for="txtAddress" tlt>
+					Dirección
+				</label>
+				<input type="text" [(ngModel)]="record.Address" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Dirección" name="txtAddress" />
+			</div>
+			<div class="col-sm-2 form-group">
+				<label for="txtZipCode" tlt>
+					Código Postal
+				</label>
+				<input type="text" [(ngModel)]="record.ZipCode" class="form-control" autocomplete="off"
+					[crud-non-required]="action" tlt-placeholder="Código Postal" name="txtZipCode" />
+			</div>
+			<div class="col-sm-6 form-group">
+				<label for="txtDistrictName tlt">
+					Localidad
+				</label>
+				<input type="text" [(ngModel)]="record.DistrictName" class="form-control" autocomplete="off"
+					[crud-non-required]="action" tlt-placeholder="Localidad" name="txtDistrictName" />
+			</div>
+			<div class="col-sm-3 form-group">
+				<label for="txtVatCode" tlt>
+					IVA
+				</label>
+				<input type="text" [(ngModel)]="record.VatCode" class="form-control" autocomplete="off"
+					[crud-non-required]="action" tlt-placeholder="IVA" name="txtVatCode" />
+			</div>
+			<div class="col-sm-3 form-group">
+				<label for="txtStateID" tlt>
+					Provincia
+				</label>
+				<p class="input-group">
+					<select [(ngModel)]="record.StateID" class="form-control" autocomplete="off"
+						[crud-required]="action" placeholder="Provincia" name="txtStateID">
+						<option [ngValue]=undefined selected tlt> - Seleccione -</option>
+						<option [value]="T.StateID" *ngFor="let T of StateList | orderBy:'StateName'">{{ T.StateName }}
+						</option>
+					</select>
+
+					<button type="button" (click)="tableAdd(record,'State','StateList')" class="btn btn-open"
+						crud-show-c-u="{{action}}">
+						<img src="assets/images/form-add.svg" />
+					</button>
+				</p>
+			</div>
+
+		</div>
+
+
+	</div>
+
+</form>

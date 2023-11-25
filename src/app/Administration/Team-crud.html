@@ -1,0 +1,112 @@
+﻿<form #crudView="ngForm" class="form-crud">
+	<crud-toolbar [form]="this"></crud-toolbar>
+
+	<div class="form-body">
+		<div class="row">
+			
+			<div class="col-sm-6 form-group">
+				<label for="txtTeamName" tlt>
+					Nombre
+				</label>
+				<input type="text" [(ngModel)]="record.TeamName" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Nombre" name="txtTeamName" />
+			</div>
+			
+			<div class="col-sm-3 form-group">
+				<label for="txtZoneID" tlt>
+					Zona
+				</label>
+				<p class="input-group">
+					<select [(ngModel)]="record.ZoneID" class="form-control" autocomplete="off"
+						[crud-required]="action" placeholder="Zona" name="txtZoneID">
+						<option [ngValue]=undefined selected tlt> - Seleccione -</option>
+						<option [value]="T.ZoneID" *ngFor="let T of ZoneList | orderBy:'ZoneName'">{{ T.ZoneName }}
+						</option>
+					</select>
+
+					<button type="button" (click)="tableAdd(record,'Zone','ZoneList')" class="btn btn-open"
+						crud-show-c-u="{{action}}">
+						<img src="assets/images/form-add.svg" />
+					</button>
+				</p>
+			</div>
+			<div class="col-sm-2 form-group">
+                <label for="TeamFileID" tlt>
+                    Logo
+                </label>
+                <div>
+                    <a target="_blank" href="{{baseUrl}}Api/file/{{record.FileID}}"
+                        *ngIf="record.PreviewFileID===false">
+                        {{record.FileName}}
+
+                    </a>
+                    <a target="_blank" href="{{baseUrl}}Api/file/{{record.FileID}}" *ngIf="record.PreviewFileID===true">
+                        <img src="{{baseUrl}}Api/File/GetThumbnailFile/{{record.FileID}}"
+                            *ngIf="record.PreviewFileID===true" />
+                    </a>
+
+                    <label for="recordTeamFileID" class="btn btn-oil" [crud-show-c-u]="action">
+                        <i class="fas fa-upload"></i>&nbsp;&nbsp;<span tlt>Subir Archivo</span>
+                    </label>
+                    <input type="file" name="recordTeamFileID" id="recordTeamFileID"
+                        (change)="uploadFile($event,record,'FileID')" />
+                </div>
+            </div>
+
+		</div>
+
+
+		<table class="table table-bordered  table-sm">
+			<thead class="thead-dark">
+				<tr>
+					<th [crud-show-c-u]="action" style="width:24px;"></th>
+					<th tlt>Nombre Jugador</th>
+					<th tlt>N° Camiseta</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<ng-container *ngFor="let r of record.TeamPlayer ; let index=index">
+					<tr *ngIf="r.EntityStatus !=='D'">
+						<td crud-show-c-u="{{action}}" style="width:24px">
+							<button type="button" class="btn btn-outline-danger" title="Eliminar"
+								(click)="itemRemove('TeamPlayer',r)">
+								<i class="fas fa-times"></i>
+							</button>
+						</td>
+						
+						<td><input type="text" [(ngModel)]="r.PlayerName" class="form-control"
+								autocomplete="off"  [crud-required]="action"
+								tlt-placeholder="Nombre Jugador" (ngModelChange)="rowChanged(r)"
+								[name]="'PlayerName' + index" />
+								</td>
+					   
+						
+						
+						<td><input type="text" [(ngModel)]="r.PlayerNumber" class="form-control"
+								autocomplete="off" style="text-align: right" [crud-required]="action"
+								numeric="0" tlt-placeholder="N° Camiseta" (ngModelChange)="rowChanged(r)"
+								[name]="'PlayerNumber' + index" />
+								</td>
+					   
+					</tr>
+				</ng-container>
+
+			</tbody>
+			<tfoot>
+
+				<tr style="font-weight:bold">
+					<td colspan="100%" crud-show-c-u="{{action}}">
+						<button type="button" class="btn btn-outline-info"
+							(click)="itemAdd('TeamPlayer')">
+							<i class="fas fa-plus"></i>
+						</button>
+					</td>				   
+				</tr>
+
+
+			</tfoot>
+		</table>
+	</div>
+
+</form>

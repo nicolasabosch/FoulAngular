@@ -1,0 +1,29 @@
+<form #crudView="ngForm" class="form-crud">
+	<crud-toolbar [form]="this"></crud-toolbar>
+
+	<div class="form-body">
+		<div class="row">
+			<div class="col-sm-3 form-group">
+				<label for="txtMatchStatusID" tlt>
+					Código
+				</label>
+				<input type="text" [(ngModel)]="record.MatchStatusID" class="form-control" autocomplete="off"
+					[crud-key]="action" tlt-placeholder="Código" name="txtMatchStatusID" />
+			</div>
+			<div class="col-sm-9 form-group">
+				<label for="txtMatchStatusName" tlt>
+					Nombre
+				</label>
+				<input type="text" [(ngModel)]="record.MatchStatusName" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Nombre" name="txtMatchStatusName" />
+			</div>
+
+			
+		</div>
+
+		<record-translation [crudForm]="this" [record]="record"></record-translation>
+
+		<audit-view [crudForm]="this"></audit-view>
+	</div>
+
+</form>

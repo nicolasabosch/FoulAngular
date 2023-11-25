@@ -1,0 +1,47 @@
+﻿<form #crudView="ngForm" class="form-crud">
+	<crud-toolbar [form]="this"></crud-toolbar>
+
+	<div class="form-body">
+		<div class="row">
+			<div class="col-sm-3 form-group">
+				<label for="txtParameterID" tlt>
+					Código
+				</label>
+				<input type="text" [(ngModel)]="record.ParameterID" class="form-control" autocomplete="off"
+					[crud-key]="action" tlt-placeholder="Código" name="txtParameterID" />
+			</div>
+			<div class="col-sm-6 form-group">
+				<label for="txtParameterName" tlt>
+					Nombre
+				</label>
+				<input type="text" [(ngModel)]="record.ParameterName" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Nombre" name="txtParameterName" />
+			</div>
+
+			<div class="col-sm-12 form-group">
+				<label for="txaParameterDescription" tlt>
+					Descripción
+				</label>
+				<textarea [(ngModel)]="record.ParameterDescription" class="form-control" autocomplete="off"
+					[crud-non-required]="action" rows="3" tlt-placeholder="Descripción"
+					name="txaParameterDescription"></textarea>
+
+			</div>
+
+			<div class="col-sm-12 form-group">
+				<label tlt>
+					Valor
+				</label>
+				<textarea [(ngModel)]="record.ParameterValue" class="form-control" autocomplete="off"
+					tlt-placeholder="Valor" [crud-non-required]="action" rows="3" placeholder="Valor"
+					[name]="'txtParameterValueDef'"></textarea>
+
+			</div>
+
+
+
+		</div>
+
+
+	</div>
+</form>

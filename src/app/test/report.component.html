@@ -1,0 +1,51 @@
+<style>
+    tbody {
+        height: calc(100vh - 260px) !important;
+    }
+</style>
+
+
+<div style="padding-left: 10px;padding-right: 10px">
+    <div style="padding: 10px;">
+        <button class="btn btn-primary btn-sm" (click)="report.removeFilters()">
+            <i class="fas fa-filter"></i>
+            Remove filters</button>
+    </div>
+    {{report.filteredData?.length}} / {{report.data?.length}}
+
+
+    <table class="table table-condensed table-bordered table-sm table-report">
+        <thead class="thead-dark" data-container="body">
+            <tr>
+                <th *ngFor="let column of table; let i = index " style="width: 200px;">
+                    <reportcolumn [filterName]="column.ColumnText" [fieldName]="column.FieldName"
+                    [draggable]="true" (dragstart)="onDragStart(i)"
+                    (dragenter)="onDragEnter(i)" (dragend)="onDragEnd()"
+                        [dataType]="column.DataType"></reportcolumn>
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody (scroll)="report.setRowsLimit($event)">
+            <tr
+                *ngFor="let r of report.filteredData | orderBy:report.dataOrder  | slice:0:report.rowsLimit ; let i = index ">
+                <td *ngFor="let column of table">
+                <span *ngIf="!column.DataType || column.DataType ==='String'">{{r[column.FieldName]}}</span>
+                <span *ngIf="column.DataType ==='Decimal'" style="text-align: right;display: block;">{{r[column.FieldName] | number:column.Format}}</span>
+                <span *ngIf="column.DataType ==='Integer'" style="text-align: right;display: block;">{{r[column.FieldName] }}</span>
+                </td>
+               
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"></td>
+
+                <td style="text-align: right;">{{ report.filteredData | sum:'InvoicingAmount' | number:'1.2-2'}}</td>
+                <td style="text-align: right;">{{ report.filteredData | pxqsum:'InvoicingAmount':'InvoicingOrderNumber'
+                    | number:'1.2-2'}}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

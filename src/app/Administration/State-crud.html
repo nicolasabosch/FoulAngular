@@ -1,0 +1,24 @@
+﻿<form #crudView="ngForm" class="form-crud">
+    <crud-toolbar [form]="this"></crud-toolbar>
+
+    <div class="form-body">
+		<div class="row">
+			<div class="col-sm-3 form-group">
+	<label for="txtStateID" >
+			StateID
+		</label>
+		<input type="text" [(ngModel)]="record.StateID" class="form-control" autocomplete="off"  [crud-key]="action"  
+				placeholder="StateID" name="txtStateID" />
+</div><div class="col-sm-9 form-group">
+	<label for="txtStateName" >
+			StateName
+		</label>
+		<input type="text" [(ngModel)]="record.StateName" class="form-control" autocomplete="off"  [crud-required]="action"  
+				placeholder="StateName" name="txtStateName" />
+</div>
+		</div>
+
+		
+	</div>
+	
+</form>

@@ -1,0 +1,69 @@
+﻿<form class="form-list">
+	<form-list-header [crudForm]="this"></form-list-header>
+	<div class="form-body">
+		<h6 class="text-muted" tlt>Críterios de Búsqueda</h6>
+		<div class="panel-search">
+			<div class="row">
+				<div class="col-sm-3 form-group">
+					<label for="txtCustomerID" tlt>
+						Código
+					</label>
+					<input type="text" [(ngModel)]="search.CustomerID" class="form-control" autocomplete="off"
+						tlt-placeholder="Código" name="txtCustomerID" />
+				</div>
+				<div class="col-sm-9 form-group">
+					<label for="txtCustomerName" tlt>
+						Nombre
+					</label>
+					<input type="text" [(ngModel)]="search.CustomerName" class="form-control" autocomplete="off"
+						tlt-placeholder="Nombre" name="txtCustomerName" />
+				</div>
+				<div class="col-sm-3 form-group">
+					<label for="txtStateID" tlt>
+						Provincia
+					</label>
+					<p class="input-group">
+						<select [(ngModel)]="search.StateID" class="form-control" autocomplete="off"
+							placeholder="Provincia" name="txtStateID">
+							<option [ngValue]=undefined selected tlt> - Todos -</option>
+							<option [value]="T.StateID" *ngFor="let T of StateList | orderBy:'StateName'">{{ T.StateName
+								}}</option>
+						</select>
+
+					</p>
+				</div>
+
+
+				<div class="col-sm-3 form-group">
+					<crud-button-search-reset [crudForm]="this"></crud-button-search-reset>
+				</div>
+			</div>
+		</div>
+
+		<crud-button-new [crudForm]="this"></crud-button-new>
+
+
+
+		<table class="table table-condensed table-bordered table-sm table-hover">
+			<thead class="thead-dark" ngbTooltip="{{recordList?.length}} Registros" data-container="body">
+				<tr>
+					<th> <th-sort text="Código" fieldName="CustomerID" [(listOrder)]="recordListOrder"></th-sort></th>
+					<th> <th-sort text="Nombre" fieldName="CustomerName" [(listOrder)]="recordListOrder"
+							default="ASC"></th-sort></th>
+					<th> <th-sort text="Provincia" fieldName="StateName" [(listOrder)]="recordListOrder"></th-sort></th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let r of recordList | search:searchText.split(' ')[0] | search:searchText.split(' ')[1] | search:searchText.split(' ')[2] | orderBy:recordListOrder"
+					(click)="viewRecord(r)" [ngClass]="{'table-info': r.CustomerID === selectedID}">
+					<td>{{r.CustomerID}}</td>
+					<td>{{r.CustomerName}}</td>
+					<td>{{r.StateName}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</form>

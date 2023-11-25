@@ -1,0 +1,345 @@
+﻿<form #crudView="ngForm" class="form-crud">
+    <crud-toolbar [form]="this"></crud-toolbar>
+
+    <div class="form-body">
+        <div class="row">
+            <div class="col-sm-1 form-group">
+                <label for="txtProjectID" tlt>
+                    Código
+                </label>
+                <input type="text" [(ngModel)]="record.ProjectID" class="form-control" autocomplete="off"
+                    style="text-align: right" [crud-db-generated]="action" numeric="0" tlt-placeholder="Código"
+                    name="txtProjectID" />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="txtProjectName" tlt>
+                    Nombre
+                </label>
+                <input type="text" [(ngModel)]="record.ProjectName" class="form-control" autocomplete="off"
+                    [crud-required]="action" tlt-placeholder="Nombre" name="txtProjectName" />
+            </div>
+            <div class="col-sm-2 form-group">
+                <label for="txtProjectDate" tlt>
+                    Fecha
+                </label>
+                <p class="input-group">
+                    <input type="text" ngbDatepicker #txtProjectDate="ngbDatepicker" style="max-width:120px"
+                        [(ngModel)]="record.ProjectDate" [crud-required]="action" name="txtProjectDate"
+                        tlt-placeholder="Fecha" class="form-control" onfocus="blur();">
+
+                    <span (click)="txtProjectDate.toggle()" class="btn btn-outline-secondary" style="cursor: pointer;"
+                        crud-show-c-u="{{action}}" tabindex="-1">
+                        <i class="far fa-calendar-alt"></i>
+                    </span>
+                </p>
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label for="txtProjectTypeID" tlt>
+                    Tipo de Proyecto
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.ProjectTypeID" class="form-control" autocomplete="off"
+                        [crud-required]="action" tlt-placeholder="Tipo de Proyecto" name="txtProjectTypeID">
+                        <option [ngValue]=undefined selected tlt> - Seleccione -</option>
+                        <option [value]="T.ProjectTypeID" *ngFor="let T of ProjectTypeList | orderBy:'ProjectTypeName'">
+                            {{ T.ProjectTypeName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
+            <div class="col-sm-4 form-group">
+                <label for="txtCustomerID" tlt>
+                    Cliente
+                </label>
+                <p class="input-group">
+                    <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="record.Customer"
+                        name="CustomerID" [crud-required]="action" [ngbTypeahead]="tableSearch('Customer')"
+                        [focusFirst]='true' [editable]='false' autocomplete='off' crud-typeahead
+                        [displayFieldName]="'CustomerName'" tlt-placeholder="Cliente"
+                        (ngModelChange)="record.CustomerID = record.Customer?.CustomerID" />
+                    <button type="button" (click)="tableList(record,'Customer')" class="btn btn-open"
+                        crud-show-c-u="{{action}}">
+                        <img src="assets/images/form-list.svg" />
+                    </button>
+
+                    <button type="button" (click)="tableAdd(record,'Customer')" class="btn btn-open"
+                        crud-show-c-u="{{action}}">
+                        <img src="assets/images/form-add.svg" />
+                    </button>
+                </p>
+            </div>
+            <div class="col-sm-3 form-group">
+
+                <label for="txtProjectStatusID" tlt>
+                    Estado de Proyecto
+                </label>
+                <p class="input-group">
+                    <select [(ngModel)]="record.ProjectStatusID" class="form-control" autocomplete="off"
+                        [crud-required]="action" tlt-placeholder="Tipo de Proyecto" name="txtProjectStatusID">
+                        <option [ngValue]=undefined selected tlt> - Seleccione -</option>
+                        <option [ngValue]="T.ProjectStatusID"
+                            *ngFor="let T of ProjectStatusList | orderBy:'ProjectStatusName'">
+                            {{ T.ProjectStatusName }}</option>
+                    </select>
+
+
+                </p>
+            </div>
+
+            <div class="col-sm-2 form-group">
+                <label for="ProjectFileID" tlt>
+                    Archivo
+                </label>
+                <div>
+                    <a target="_blank" href="{{baseUrl}}Api/file/{{record.FileID}}"
+                        *ngIf="record.PreviewFileID===false">
+                        {{record.FileName}}
+
+                    </a>
+                    <a target="_blank" href="{{baseUrl}}Api/file/{{record.FileID}}" *ngIf="record.PreviewFileID===true">
+                        <img src="{{baseUrl}}Api/File/GetThumbnailFile/{{record.FileID}}"
+                            *ngIf="record.PreviewFileID===true" />
+                    </a>
+
+                    <label for="recordProjectFileID" class="btn btn-oil" [crud-show-c-u]="action">
+                        <i class="fas fa-upload"></i>&nbsp;&nbsp;<span tlt>Subir Archivo</span>
+                    </label>
+                    <input type="file" name="recordProjectFileID" id="recordProjectFileID"
+                        (change)="uploadFile($event,record,'FileID')" />
+                </div>
+            </div>
+        </div>
+
+        <nav ngbNav #nav="ngbNav" class="nav-tabs" [destroyOnHide]="false">
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>Gastos del Proyecto</a>
+                <ng-template ngbNavContent>
+                    <table class="table table-bordered  table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th [crud-show-c-u]="action" style="width:24px;"></th>
+                                <th tlt>Fecha</th>
+                                <th tlt>Proveedor</th>
+                                <th tlt>Concepto</th>
+                                <th tlt>Cantidad</th>
+                                <th tlt>Monto</th>
+                                <th tlt>Archivo</th>
+                                <th tlt>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let r of record.ProjectExpense ; let index=index">
+                                <tr *ngIf="r.EntityStatus !=='D'">
+                                    <td crud-show-c-u="{{action}}" style="width:24px">
+                                        <button type="button" class="btn btn-outline-danger" title="Eliminar"
+                                            (click)="itemRemove('ProjectExpense',r)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <p class="input-group">
+                                            <input type="text" ngbDatepicker #txtExpenseDate="ngbDatepicker"
+                                                tlt-placeholder="Fecha" style="min-width:120px;max-width:120px"
+                                                (ngModelChange)="rowChanged(r)" [(ngModel)]="r.ExpenseDate"
+                                                [crud-non-required]="action" [name]="'ExpenseDate' + index"
+                                                class="form-control" onfocus="blur();" />
+
+                                            <span (click)="txtExpenseDate.toggle()" class="btn btn-outline-secondary"
+                                                style="cursor: pointer;" crud-show-c-u="{{action}}" tabindex="-1">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </p>
+                                    </td>
+
+                                    <td>
+
+                                        <input id="typeahead-template" type="text" class="form-control"
+                                            tlt-placeholder="Proveedor" [(ngModel)]="r.Vendor"
+                                            [name]="'VendorID' + index" [crud-required]="action"
+                                            [ngbTypeahead]="tableSearch('Vendor')" [focusFirst]='true'
+                                            [editable]='false' autocomplete='off' crud-typeahead
+                                            [displayFieldName]="'VendorName'" (ngModelChange)="rowChanged(r)"
+                                            (ngModelChange)="r.VendorID = r.Vendor?.VendorID" />
+
+
+
+
+                                    </td>
+                                    <td>
+
+                                        <select [(ngModel)]="r.ConceptID" class="form-control" autocomplete="off"
+                                            [crud-required]="action" tlt-placeholder="Concepto"
+                                            (ngModelChange)="rowChanged(r)" [name]="'ConceptID' + index">
+                                            <option [ngValue]=undefined selected tlt> - Seleccione -</option>
+                                            <option [value]="T.ConceptID"
+                                                *ngFor="let T of ConceptList | orderBy:'ConceptName'">{{
+                                                T.ConceptName }}</option>
+                                        </select>
+
+
+                                    </td>
+                                    <td><input type="text" [(ngModel)]="r.Quantity" class="form-control"
+                                            autocomplete="off" style="text-align: right" [crud-required]="action"
+                                            numeric="0" tlt-placeholder="Cantidad" (ngModelChange)="rowChanged(r)"
+                                            [name]="'Quantity' + index" /></td>
+                                    <td><input type="text" [(ngModel)]="r.Amount" class="form-control"
+                                            autocomplete="off" style="text-align: right" [crud-required]="action"
+                                            numeric="2" tlt-placeholder="Monto" (ngModelChange)="rowChanged(r)"
+                                            [name]="'Amount' + index" /></td>
+                                    <td>
+                                        <div>
+                                            <a target="_blank" href="{{baseUrl}}Api/file/{{r.FileID}}"
+                                                *ngIf="r.PreviewFileID===false">
+                                                {{r.FileName}}
+                                            </a>
+                                            <a target="_blank" href="{{baseUrl}}Api/file/{{r.FileID}}"
+                                                *ngIf="r.PreviewFileID===true">
+                                                <img src="{{baseUrl}}Api/File/GetThumbnailFile/{{r.FileID}}"
+                                                    *ngIf="r.PreviewFileID===true" />
+                                            </a>
+
+                                            <label [for]="'ProjectExpenseFileID' + index" class="btn btn-oil"
+                                                [crud-show-c-u]="action">
+                                                <i class="fas fa-upload"></i>&nbsp;&nbsp;<span tlt>Subir Archivo</span>
+                                            </label>
+                                            <input type="file" [name]="'ProjectExpenseFileID' + index"
+                                                [id]="'ProjectExpenseFileID' + index "
+                                                (change)="uploadFile($event,r,'FileID')" />
+                                        </div>
+                                    </td>
+
+                                    <td style="text-align: right;">{{r.Quantity * r.Amount | number:'1.2-2'}}</td>
+                                </tr>
+                            </ng-container>
+
+                        </tbody>
+                        <tfoot>
+
+                            <tr style="font-weight:bold">
+                                <td colspan="1" crud-show-c-u="{{action}}">
+                                    <button type="button" class="btn btn-outline-info"
+                                        (click)="itemAdd('ProjectExpense')">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </td>
+
+
+
+                                <td colspan="2"></td>
+                                <td style="text-align:right" tlt> Cantidad:</td>
+                                <td style="text-align:right"> {{ record.ProjectExpense | sum:'Quantity' | number:'1.0-0'
+                                    }}</td>
+                                <td></td>
+                                <td tlt>Total:</td>
+                                <td style="text-align:right"> {{ record.ProjectExpense | pxqsum:'Quantity':'Amount' |
+                                    number:'1.2-2' }}</td>
+                            </tr>
+
+
+                        </tfoot>
+                    </table>
+                </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>Archivos</a>
+                <ng-template ngbNavContent>
+                    <table class="table table-bordered  table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th [crud-show-c-u]="action" style="width:24px"></th>
+                                <th style="width:20%" tlt>Archivo</th>
+                                <th style="width:80%" tlt>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let r of record.ProjectFile ; let index=index">
+                                <tr *ngIf="r.EntityStatus !=='D'">
+                                    <td crud-show-c-u="{{action}}" style="min-width:24px;max-width:24px">
+                                        <button type="button" class="btn btn-outline-danger" title="Eliminar"
+                                            (click)="itemRemove('ProjectFile',r)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a target="_blank" href="{{baseUrl}}Api/file/{{r.FileID}}"
+                                                *ngIf="r.PreviewFileID===false">
+                                                {{r.FileName}}
+                                            </a>
+                                            <a target="_blank" href="{{baseUrl}}Api/file/{{r.FileID}}"
+                                                *ngIf="r.PreviewFileID===true">
+                                                <img src="{{baseUrl}}Api/File/GetThumbnailFile/{{r.FileID}}"
+                                                    *ngIf="r.PreviewFileID===true" />
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea [(ngModel)]="r.Remarks" class="form-control" autocomplete="off"
+                                            [crud-non-required]="action" rows="3" (ngModelChange)="rowChanged(r)"
+                                            tlt-placeholder="Descripción" [name]="'Remarks' + index"></textarea>
+                                    </td>
+
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight:bold">
+                                <td colspan="1" crud-show-c-u="{{action}}">
+                                    <label for="ProjectFileFileID" class="btn btn-oil" [crud-show-c-u]="action">
+                                        <i class="fas fa-upload"></i>&nbsp;&nbsp;<span tlt>Subir Archivo</span>
+                                    </label>
+                                    <input type="file" name="ProjectFileFileID" id="ProjectFileFileID"
+                                        (change)="uploadFileAndAddItem($event,'ProjectFile')" />
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>Herramientas</a>
+                <ng-template ngbNavContent>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="min-width:56px">
+                                    <div [crud-show-c-u]="action">
+                                        <check-uncheck [list]="record.ProjectTool"></check-uncheck>
+                                    </div>
+                                </th>
+                                <th style="width:100%" tlt>Herramienta</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of record.ProjectTool ; let index=index">
+                                <td><input type="checkbox" [(ngModel)]="c.Checked" class="form-control"
+                                        [crud-non-required]="action" [name]="'ProjectToolChecked' + index" /></td>
+                                <td style="vertical-align:middle;">{{c.ToolName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-template>
+            </ng-container>
+            <ng-container ngbNavItem>
+                <a ngbNavLink tlt>Usuarios del Proyecto</a>
+                <ng-template ngbNavContent>
+                    <crud-taglist [idFieldName]="'USerID'" [displayFieldName]="'UserName'"
+                        [(ngModel)]="record.ProjectUser" tlt-placeholder="Usuarios del Proyecto" name="usuarios"
+                        [ngbTypeahead]="tableSearchTag('User',record.ProjectUser)" [action]="action"></crud-taglist>
+
+
+                </ng-template>
+            </ng-container>
+
+        </nav>
+        <div [ngbNavOutlet]="nav"></div>
+        <br />
+        <!--
+        <record-translation [crudForm]="this" [record]="record"></record-translation>
+        -->
+    </div>
+
+</form>

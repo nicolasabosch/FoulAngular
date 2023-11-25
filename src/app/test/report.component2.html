@@ -1,0 +1,79 @@
+<style>
+    
+    table thead {
+        position: sticky;
+        position: -webkit-sticky;
+        inset-block-start: 0;
+        /* "top" */
+        z-index: 5;
+        
+        
+    }
+
+    table tfoot {
+        position: sticky;
+        position: -webkit-sticky;
+        inset-block-end:0;
+        /* "bottom" */
+        z-index: 5;
+    }
+
+    table tfoot tr {
+        background-color: teal;
+        color:white;
+        font-weight: bold;
+    }
+
+    table {
+        margin-bottom: 0px;
+    }
+</style>
+
+<!--
+<pre>{{report.filters | json}}</pre>
+-->
+<div style="padding: 10px;">
+    <button class="btn btn-primary btn-sm" (click)="report.removeFilters()">
+        <i class="fas fa-filter"></i>
+        Remove filters</button>
+</div>
+  {{report.filteredData?.length}}  / {{report.data?.length}} 
+<div class="table-responsive" style="height:440px; width:200px; overflow-y:scroll; scroll-margin: 40;" (scroll)="report.setRowsLimit($event)" id="table-container">
+    <table class="table table-condensed table-bordered table-sm ">
+        <thead class="thead-dark" data-container="body">
+            <tr>
+                <th>
+                    <reportcolumn [filterName]="'País'" [fieldName]="'CountryName'"></reportcolumn>
+                </th>
+
+                <th>
+                    <reportcolumn [filterName]="'Empresa'" [fieldName]="'CompanyName'" [sort]="'asc'"></reportcolumn>
+                </th>
+                <th>
+                    <reportcolumn [filterName]="'Monto'" [fieldName]="'InvoicingAmount'" [dataType]="'Decimal'">
+                    </reportcolumn>
+                </th>
+            </tr>
+        </thead>
+          <tbody>
+            <tr *ngFor="let r of report.filteredData | orderBy:report.dataOrder  | slice:0:report.rowsLimit ; let i = index ">
+                <td>
+                    {{r.CountryName}}
+                </td>
+                <td>
+                    {{r.CompanyName}}
+                </td>
+                <td style="text-align: right;">
+                    {{r.InvoicingAmount | number:'1.2-2'}}
+                </td>
+            </tr>
+        </tbody>
+        <tfoot >
+            <tr >
+                <td colspan="2"></td>
+                
+                <td style="text-align: right;">{{ report.filteredData | sum:'InvoicingAmount' | number:'1.2-2'}}</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

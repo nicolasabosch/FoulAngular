@@ -1,0 +1,14 @@
+<!-- <ng-container>
+  <router-outlet #outlet="outlet"></router-outlet>
+</ng-container> -->
+
+<div class="container-fluid" style="padding-right: 0px;padding-left:0px;">
+  <app-menu *ngIf="isLogedIn()"></app-menu>
+  </div>
+  <div class="container-fluid" style="padding-right: 0px;padding-left:0px;">
+  <div [@routeAnimations]="prepareRoute(outlet)" >
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+  </div>
+
+  <app-loader ></app-loader>

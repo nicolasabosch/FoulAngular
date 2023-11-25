@@ -1,0 +1,27 @@
+﻿<form #crudView="ngForm" class="form-crud">
+	<crud-toolbar [form]="this"></crud-toolbar>
+
+	<div class="form-body">
+		<div class="row">
+			<div class="col-sm-11 form-group">
+				<label for="txtToolName" tlt>
+					Nombre
+				</label>
+				<input type="text" [(ngModel)]="record.ToolName" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Nombre" name="txtToolName" />
+			</div>
+			<div class="col-sm-1 form-group">
+				<label for="chkActive" tlt>
+					Activo
+				</label>
+				<input type="checkbox" [(ngModel)]="record.Active" class="form-control form-checkbox" autocomplete="off"
+					[crud-non-required]="action" name="chkActive" />
+
+			</div>
+		</div>
+		<record-translation [crudForm]="this" [record]="record"></record-translation>
+
+
+	</div>
+
+</form>
