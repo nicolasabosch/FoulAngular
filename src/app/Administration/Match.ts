@@ -9,8 +9,7 @@ import { Observable } from 'rxjs';
 export abstract class MatchComponent extends CrudFormComponent implements OnInit {
   ZoneList: any[];
   MatchStatusList: any[];
-  
-  
+
 
 
   ngOnInit(): void {
