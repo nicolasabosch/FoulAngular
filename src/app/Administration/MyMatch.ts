@@ -3,21 +3,27 @@ import { CrudFormComponent } from 'ngx-cabernet';
 import { Observable, forkJoin } from 'rxjs';
 
 @Component({
-  selector: 'Match',
+  selector: 'MyMatch',
   template: ''
 })
-export abstract class MatchComponent extends CrudFormComponent implements OnInit {
+export abstract class MyMatchComponent extends CrudFormComponent implements OnInit {
   ZoneList: any[];
   MatchStatusList: any[];
   UserList: any[];
 
+  public  preSearchRecordList():void
+  {
+    this.search = {};
+        this.search.UserID = this.crudService.user.UserID;
+        alert(this.search.UserID);
+  }
 
   ngOnInit(): void {
     this.entityName = "Match";
     this.identityKey = true;
     this.fillRecordListOnInit = false;
-
-
+    this.deleteable =false;
+   
 
     this.onAddRecord.subscribe(record => {
 
@@ -41,20 +47,20 @@ export abstract class MatchComponent extends CrudFormComponent implements OnInit
 }
 
 @Component({
-  selector: 'Match-list',
-  templateUrl: './Match-list.html',
+  selector: 'MyMatch-list',
+  templateUrl: './MyMatch-list.html',
 })
-export class MatchListComponent extends MatchComponent {
+export class MyMatchListComponent extends MyMatchComponent {
 
 
 
 }
 
 @Component({
-  selector: 'Match-crud',
-  templateUrl: './Match-crud.html',
+  selector: 'MyMatch-crud',
+  templateUrl: './MyMatch-crud.html',
 })
-export class MatchCrudComponent extends MatchComponent {
+export class MyMatchCrudComponent extends MyMatchComponent {
 
   private socket: WebSocket;
   private connection: Observable<any>;

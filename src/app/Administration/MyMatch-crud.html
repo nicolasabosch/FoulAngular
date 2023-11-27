@@ -25,7 +25,7 @@
                     Zona
                 </label>
                 <p class="input-group">
-                    <select [(ngModel)]="record.ZoneID" class="form-control" autocomplete="off" [crud-required]="action"
+                    <select [(ngModel)]="record.ZoneID" class="form-control" autocomplete="off" [crud-key]="action"
                         tlt-placeholder="Zona" name="txtZoneID">
                         <option [ngValue]=undefined selected tlt> - Seleccione -</option>
                         <option [value]="T.ZoneID" *ngFor="let T of ZoneList | orderBy:'ZoneName'">
@@ -41,7 +41,7 @@
                 </label>
                 <p class="input-group">
                     <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="record.HomeTeam"
-                        name="HomeTeamID" [crud-required]="action" [ngbTypeahead]="tableSearch('Team')"
+                        name="HomeTeamID" [crud-key]="action" [ngbTypeahead]="tableSearch('Team')"
                         [focusFirst]='true' [editable]='false' autocomplete='off' crud-typeahead
                         [displayFieldName]="'TeamName'" tlt-placeholder="Equipo Local"
                         (ngModelChange)="record.HomeTeamID = record.HomeTeam.TeamID" />
@@ -56,7 +56,7 @@
                 </label>
                 <p class="input-group">
                     <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="record.AwayTeam"
-                        name="AwayTeamID" [crud-required]="action" [ngbTypeahead]="tableSearch('Team')"
+                        name="AwayTeamID" [crud-key]="action" [ngbTypeahead]="tableSearch('Team')"
                         [focusFirst]='true' [editable]='false' autocomplete='off' crud-typeahead
                         [displayFieldName]="'TeamName'" tlt-placeholder="Equipo Visitante"
                         (ngModelChange)="record.AwayTeamID = record.AwayTeam.TeamID" />
@@ -90,7 +90,7 @@
                 <label for="txtUserID" tlt>
                     Árbitro
                 </label>
-                <select [(ngModel)]="record.UserID" class="form-control" autocomplete="off" [crud-required]="action"
+                <select [(ngModel)]="record.UserID" class="form-control" autocomplete="off" [crud-key]="action"
                     tlt-placeholder="Árbitro" name="txtUserID">
                     <option [ngValue]=undefined selected tlt> - Seleccione -</option>
                     <option [value]="T.UserID" *ngFor="let T of UserList | orderBy:'UserName'">
@@ -114,6 +114,13 @@
                     name="AwayGoals" />
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 form-group"  style="text-align: center;" *ngIf="record.MatchStatusID =='NotStarted' && action=='Viewing'" >
+            <button class="btn btn-success" (click)="startMatch()">Comenzar Partido</button>
+        </div>
+        
+
     </div>
     
 </form>

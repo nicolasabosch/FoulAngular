@@ -36,7 +36,20 @@
 					autocomplete="off" [crud-non-required]="action" name="chkForceChangePassword" />
 
 			</div>
-
+			<div class="col-sm-3 form-group">
+				<label for="txtLogonName" tlt>
+					Login
+				</label>
+				<input type="text" [(ngModel)]="record.LogonName" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Login" name="txtLogonName" />
+			</div>
+			<div class="col-sm-3 form-group" *ngIf="action=='Adding'">
+				<label for="txtPasswordName" tlt>
+					Password
+				</label>
+				<input type="password" [(ngModel)]="record.Password" class="form-control" autocomplete="off"
+					[crud-required]="action" tlt-placeholder="Password" name="txtPasswordName" />
+			</div>
 			<div class="col-sm-2 form-group">
 				<label for="txtLastLogon" tlt>
 					Último Login
@@ -57,6 +70,7 @@
 
 
 		</div>
+		
 
 		<nav ngbNav #nav="ngbNav" class="nav-tabs" [destroyOnHide]="false">
 			<ng-container ngbNavItem>

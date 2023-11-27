@@ -23,6 +23,8 @@ import { TeamListComponent, TeamCrudComponent } from './Administration/Team';
 import { ReportComponent } from './test/report.component';
 
 import { MatchListComponent, MatchCrudComponent } from './Administration/Match';
+import { MyMatchListComponent, MyMatchCrudComponent } from './Administration/MyMatch';
+
 import { MatchStatusListComponent, MatchStatusCrudComponent } from './Administration/MatchStatus';
 
 import { NgxCabernetModule } from 'ngx-cabernet';
@@ -133,6 +135,9 @@ const appRoutes: Routes = [
   { path: 'Match', component: MatchListComponent, data: { animation: 'Match' }, canActivate: [AuthGuard] },
   { path: 'Match/:id', component: MatchCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
 
+  { path: 'MyMatch', component: MyMatchListComponent, data: { animation: 'Match' }, canActivate: [AuthGuard] },
+  { path: 'MyMatch/:id', component: MyMatchCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
+
   
   { path: 'MatchStatus', component: MatchStatusListComponent, data: { animation: 'MatchStatus' }, canActivate: [AuthGuard] },
   { path: 'MatchStatus/:id', component: MatchStatusCrudComponent, data: { animation: 'CRUD' }, canActivate: [AuthGuard] },
@@ -198,6 +203,8 @@ const appRoutes: Routes = [
 
     MatchCrudComponent,
     MatchListComponent,
+    MyMatchCrudComponent,
+    MyMatchListComponent,
     MatchStatusCrudComponent,
     MatchStatusListComponent,
     AppComponent,
