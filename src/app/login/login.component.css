@@ -20,12 +20,21 @@
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
+.imagen-container {
+    max-width: 100%; /* Hace que el contenedor sea responsivo */
+}
 
+/* Reducir el ancho de la imagen al 100% del contenedor te */
+.imagen-achicada {
+    margin: 1.8rem;
+    width: 12rem;
+    height: auto;
+}
 .login-logo
 {
-    background-color: black ;
+    background-color: white ;
     margin: 0;padding: 20px;
-    border-bottom: 5px solid  rgb(117, 116, 116) ;
+    border-bottom: 5px solid #F68C2A; ;
     text-align: center;
     font-weight: bold;
     font-size: 20px;
@@ -94,4 +103,14 @@ h3
 label
 {
     color:gray;
+}
+.custom-login-btn {
+    background-color: #F68C2A; /* Orange background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove the default button border */
+    padding: 0.7rem 2.375rem; /* Adjust padding as needed */
+    border-radius: 10px; /* Add rounded corners */
+    font-weight: bold;
+    font-size: 1.2rem;
+   
 }

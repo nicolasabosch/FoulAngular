@@ -4,26 +4,21 @@
 <app-info></app-info>
 -->
 
-    <div class="login-frame">
-        <div class="login-logo">
-            <!--
-            <img src="assets/images/logo.png" style="width: 100%;">
-            -->
-            <h1 class="siteTitle">{{siteTitle}}</h1>
-        </div>
-        <div class="login-container">
+      
+        <img class="imagen-achicada" src="Logo.png">
 
-            <h3 tlt>Acceso</h3>
+        
+       
+
+        <h1 class="text-center" style="color: #F68C2A; font-weight: bold;">Iniciar sesion</h1>
             <div class="inputs-container">
-                <div class="form-group">
-                    <label tlt>Usuario</label>
-                    <input tlt placeholder="Usuario" class="form-control" name="user" [(ngModel)]="form.user" required/>
+                <div class="form-group text-center" style="padding-top: 5rem;">
+                    <input style="border: none; outline: none; border-bottom: 2px solid #F68C2A; font-size: 1.5rem; font-weight: bold;" class="col-4 mt-5"type="text" tlt placeholder="Usuario"  name="user" [(ngModel)]="form.user" required/>
                 </div>
 
 
-                <div class="form-group">
-                    <label for="password" tlt>Contraseña</label>
-                    <input tlt placeholder="Contraseña" class="form-control" name="password" required
+                <div class="form-group" style="padding-top: 4rem;">
+                    <input style="border: none; outline: none; border-bottom: 2px solid #F68C2A; font-size: 1.5rem; font-weight: bold; position: absolute; top: 400px; left: 640px;" class="col-4 mt-5" type="text" tlt placeholder="Contraseña"  name="password" required
                     [(ngModel)]="form.password"
                         type="password">
                 </div>
@@ -38,16 +33,16 @@
                 </div>
 
             </div>
-            <div class="buttons-container">
-                <button type="submit" class="btn btn-success" [disabled]="!validSubmit()" (click)="login()" tlt>Ingresar</button>
+            <div class="buttons-container" style="position: absolute; top: 500px;">
+                <button type="submit" class="btn btn-success custom-login-btn" [disabled]="!validSubmit()" (click)="login()" tlt>Ingresar</button>
             </div>
-            <div class="text-sm-center ">
-                <a style="text-align: center;" routerLink="/ResetPasswordRequest" routerLinkActive="active" tlt>Olvidé mi
+            <div class="text-sm-center" style="position: absolute; top: 660px; left: 900px;">
+                <a style="text-align: center; color: gray; font-size: 0.8rem;" routerLink="/ResetPasswordRequest" routerLinkActive="active" tlt>Olvidé mi
                     Contraseña</a>
             </div>
-        </div>
+        
 
-    </div>
+   
 
 
 </form>

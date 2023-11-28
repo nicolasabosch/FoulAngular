@@ -1,0 +1,14 @@
+.custom-login-btn {
+    background-color: #F68C2A; /* Orange background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove the default button border */
+    padding: 0.5rem 1.875rem; /* Adjust padding as needed */
+    border-radius: 10px; /* Add rounded corners */
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.custom-login-btn:hover{
+    background: #b4671e;
+    border-radius: 10px;
+}
+
