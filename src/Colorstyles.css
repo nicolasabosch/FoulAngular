@@ -294,3 +294,9 @@ p
 {
     cursor: pointer;
 }
+
+.lettercolororange{
+    color: #F68C2A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
