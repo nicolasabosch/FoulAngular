@@ -223,9 +223,8 @@ p
 
 .text-primary
 {
-    color:#F68C2A !important;
+    color:#C20E1A !important;
     font-weight: bold;
-    
 }
 
 
@@ -301,53 +300,20 @@ p
 
 .btn-new:hover 
 {
-    background-color: #F68C2A;
+    background-color: navy;
     color:white;
 }
 
 .btn-reset {
     
-    color: #000000 !important;
+    color: #01426A !important;
     
 }
 
 .btn {
     background-color: white;
-    color: #000000;
+    color: #01426A;
     border-color: gray;
     border-width: 1px;
     border-style: solid;
-}
-.lettercolororange{
-    color: #F68C2A;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-.form-control{
-    border: none; 
-    outline: none; 
-    border-bottom: 2px solid #F68C2A; 
-    font-size: 1rem;
-   
-   
-    
-}
-label{
-    color: #F68C2A;
-    font-size: 1rem;
-    
-}
-.thead-dark{
-    background-color: white !important;
-    color: #F68C2A !important;
-}
-
-
-.table .thead-dark th {
-    background-color: white;
-    color: #F68C2A;
-    text-align: center;
-    
-    
 }

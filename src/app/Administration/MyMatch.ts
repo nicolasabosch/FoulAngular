@@ -15,7 +15,7 @@ export abstract class MyMatchComponent extends CrudFormComponent implements OnIn
   {
     this.search = {};
         this.search.UserID = this.crudService.user.UserID;
-        alert(this.search.UserID);
+        
   }
 
   ngOnInit(): void {
@@ -88,6 +88,7 @@ export class MyMatchCrudComponent extends MyMatchComponent {
   public startMatch(): void {
     //this.record.text ="Algo muy bueno";
     this.record.DataTranslation = undefined;
+    this.record.text = "Partido Listo";
     this.sendMessage(JSON.stringify(this.record));
 
   }
