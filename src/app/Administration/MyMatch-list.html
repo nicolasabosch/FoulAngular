@@ -28,22 +28,7 @@
 						</span>
 					</p>
 				</div>
-				<div class="col-sm-2 form-group">
-					<label for="txtMatchDateTo" tlt>
-						Fecha Hasta
-					</label>
-					<p class="input-group">
-						<input type="text" ngbDatepicker #txtMatchDateTo="ngbDatepicker"
-							[(ngModel)]="search.MatchDateTo" name="txtMatchDateTo" class="form-control"
-							tlt-placeholder="Fecha Hasta"
-							onfocus="blur();">
-
-						<span (click)="txtMatchDateTo.toggle()" class="btn btn-outline-secondary"
-							style="cursor: pointer;" tabindex="-1">
-							<i class="far fa-calendar-alt"></i>
-						</span>
-					</p>
-				</div>
+				
 				<div class="col-sm-3 form-group">
 					<label for="txtZoneID" tlt>
 						Zona
@@ -86,6 +71,22 @@
 						</button>
 					</p>
 				</div>
+				<div class="col-sm-2 form-group">
+					<label for="txtMatchDateTo" tlt>
+						Fecha Hasta
+					</label>
+					<p class="input-group">
+						<input type="text" ngbDatepicker #txtMatchDateTo="ngbDatepicker"
+							[(ngModel)]="search.MatchDateTo" name="txtMatchDateTo" class="form-control"
+							tlt-placeholder="Fecha Hasta"
+							onfocus="blur();">
+
+						<span (click)="txtMatchDateTo.toggle()" class="btn btn-outline-secondary"
+							style="cursor: pointer;" tabindex="-1">
+							<i class="far fa-calendar-alt"></i>
+						</span>
+					</p>
+				</div>
 				<div class="col-sm-4 form-group">
 					<label for="txtUserID" tlt>
 						Árbitro
@@ -110,23 +111,23 @@
 
 
 		<table class="table table-condensed table-bordered table-sm table-hover">
-			<thead class="thead-dark" ngbTooltip="{{recordList?.length}} Registros" data-container="body">
+			<thead class="thead-white" ngbTooltip="{{recordList?.length}} Registros" data-container="body">
 				<tr>
 					
 					<th>
-						<th-sort text="Fecha" fieldName="MatchDate" [(listOrder)]="recordListOrder"></th-sort>
+						<th-sort class="lettercolororange" text="Fecha" fieldName="MatchDate" [(listOrder)]="recordListOrder"></th-sort>
 					</th>
 					<th>
-						<th-sort text="Zona" fieldName="ZoneName" [(listOrder)]="recordListOrder">
+						<th-sort class="lettercolororange" text="Zona" fieldName="ZoneName" [(listOrder)]="recordListOrder">
 						</th-sort>
 					</th>
 					<th>
-						<th-sort text="Estado" fieldName="MatchStatusName" [(listOrder)]="recordListOrder">
+						<th-sort class="lettercolororange" text="Estado" fieldName="MatchStatusName" [(listOrder)]="recordListOrder">
 						</th-sort>
 					</th>
-					<th><th-sort text="Equipo Local" fieldName="HomeTeamName" [(listOrder)]="recordListOrder"></th-sort></th>
-					<th><th-sort text="Equipo Visitante" fieldName="AwayTeamName" [(listOrder)]="recordListOrder"></th-sort></th>
-					<th><th-sort text="Arbitro" fieldName="UserName" [(listOrder)]="recordListOrder"></th-sort></th>
+					<th><th-sort class="lettercolororange" text="Equipo Local" fieldName="HomeTeamName" [(listOrder)]="recordListOrder"></th-sort></th>
+					<th><th-sort class="lettercolororange" text="Equipo Visitante" fieldName="AwayTeamName" [(listOrder)]="recordListOrder"></th-sort></th>
+					<th><th-sort class="lettercolororange" text="Arbitro" fieldName="UserName" [(listOrder)]="recordListOrder"></th-sort></th>
 				</tr>
 			</thead>
 			<tbody>
